@@ -37,6 +37,7 @@ def main():
         loss = Loss_mse()
 
     args.cuda = args.cuda and torch.cuda.is_available()
+    print("CUDA: ",args.cuda)
     if args.cuda:
         model.cuda()
         loss.cuda()

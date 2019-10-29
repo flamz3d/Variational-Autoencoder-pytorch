@@ -40,7 +40,7 @@ class Trainer:
                 loss = self.loss(recon_batch, data, mu, logvar)
                 loss.backward()
                 self.optimizer.step()
-                loss_list.append(loss.data[0])
+                loss_list.append(loss.item())
 
             print("epoch {}: - loss: {}".format(epoch, np.mean(loss_list)))
             new_lr = self.adjust_learning_rate(epoch)
@@ -65,7 +65,7 @@ class Trainer:
                 data = data.cuda()
             data = Variable(data, volatile=True)
             recon_batch, mu, logvar = self.model(data)
-            test_loss += self.loss(recon_batch, data, mu, logvar).data[0]
+            test_loss += self.loss(recon_batch, data, mu, logvar).item()
             _, indices = recon_batch.max(1)
             indices.data = indices.data.float() / 255
             if i == 0:
@@ -88,7 +88,7 @@ class Trainer:
                 data = data.cuda()
             data = Variable(data, volatile=True)
             recon_batch, mu, logvar = self.model(data)
-            test_loss += self.loss(recon_batch, data, mu, logvar).data[0]
+            test_loss += self.loss(recon_batch, data, mu, logvar).item()
             _, indices = recon_batch.max(1)
             indices.data = indices.data.float() / 255
             if i % 50 == 0:
